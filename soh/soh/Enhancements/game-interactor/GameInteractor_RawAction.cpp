@@ -25,6 +25,12 @@ void GameInteractor::RawAction::AddOrRemoveMagic(int8_t amount) {
     int8_t currentMagicCapacity = (gSaveContext.isDoubleMagicAcquired + 1) * 48;
 
     if (gSaveContext.isMagicAcquired) {
+    if (CVarGetInteger("gMagicAmmo", 0)) {
+        if (gSaveContext.isMagicAcquired == 0) currentMagicCapacity = 24;
+        else if (gSaveContext.isDoubleMagicAcquired == 1) currentMagicCapacity = 72;
+    }
+    if (gSaveContext.isMagicAcquired || CVarGetInteger("gMagicAmmo", 0)) {
+    if (gSaveContext.isMagicAcquired) {
         gSaveContext.prevMagicState = gSaveContext.magicState;
         if (amount > 0) {
             if (gSaveContext.magic + amount > currentMagicCapacity) {
